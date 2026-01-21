@@ -1,3 +1,10 @@
+# 1.0.1
+
+- Fixed deprecated `withOpacity` calls, replaced with `withValues(alpha:)`
+- Improved panel overlay attachment with retry logic
+- Enhanced real-time updates for badges and heatmap
+- Fixed theme-aware panel styling
+
 # 1.0.0
 
 - Initial release.
