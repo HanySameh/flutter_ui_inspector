@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 /// Global configuration for inspector behavior.
 ///
 /// Uses static fields to avoid passing config through widget trees,
@@ -12,8 +14,20 @@ class UiInspectorConfig {
   /// Whether to show rebuild count badges on tracked widgets.
   static bool showRebuildCount = true;
 
+  /// Notifier for rebuild count badge visibility changes.
+  ///
+  /// Listen to this to reactively update widgets when the setting changes.
+  static final ValueNotifier<bool> showRebuildCountNotifier =
+      ValueNotifier<bool>(showRebuildCount);
+
   /// Whether to show UI state badges (loading/error/empty/ready).
   static bool showStateBadge = true;
+
+  /// Notifier for state badge visibility changes.
+  ///
+  /// Listen to this to reactively update widgets when the setting changes.
+  static final ValueNotifier<bool> showStateBadgeNotifier =
+      ValueNotifier<bool>(showStateBadge);
 
   /// Whether to track frame timings and calculate FPS.
   ///
@@ -23,6 +37,30 @@ class UiInspectorConfig {
 
   /// Whether to render the rebuild intensity heatmap overlay.
   static bool enableHeatmap = false;
+
+  /// Notifier for heatmap visibility changes.
+  ///
+  /// Listen to this to reactively update widgets when the setting changes.
+  static final ValueNotifier<bool> enableHeatmapNotifier =
+      ValueNotifier<bool>(enableHeatmap);
+
+  /// Updates [showRebuildCount] and notifies listeners.
+  static void setShowRebuildCount(bool value) {
+    showRebuildCount = value;
+    showRebuildCountNotifier.value = value;
+  }
+
+  /// Updates [showStateBadge] and notifies listeners.
+  static void setShowStateBadge(bool value) {
+    showStateBadge = value;
+    showStateBadgeNotifier.value = value;
+  }
+
+  /// Updates [enableHeatmap] and notifies listeners.
+  static void setEnableHeatmap(bool value) {
+    enableHeatmap = value;
+    enableHeatmapNotifier.value = value;
+  }
 
   /// Rebuild count threshold that triggers red badge coloring.
   ///

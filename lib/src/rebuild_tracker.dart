@@ -56,58 +56,63 @@ class _RebuildTrackerState extends State<RebuildTracker> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_trackingEnabled) {
-      return widget.child;
-    }
+    return ValueListenableBuilder<bool>(
+      valueListenable: UiInspectorConfig.showRebuildCountNotifier,
+      builder: (context, showBadge, _) {
+        if (!_trackingEnabled || !showBadge) {
+          return widget.child;
+        }
 
-    _increment();
+        _increment();
 
-    final color = _rebuilds >= UiInspectorConfig.rebuildWarningThreshold
-        ? Colors.red
-        : Colors.blueAccent;
+        final color = _rebuilds >= UiInspectorConfig.rebuildWarningThreshold
+            ? Colors.red
+            : Colors.blueAccent;
 
-    return Stack(
-      children: [
-        widget.child,
-        Positioned(
-          right: 4,
-          top: 4,
-          child: IgnorePointer(
-            ignoring: true,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.75),
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: color, width: 1.5),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    widget.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
+        return Stack(
+          children: [
+            widget.child,
+            Positioned(
+              right: 4,
+              top: 4,
+              child: IgnorePointer(
+                ignoring: true,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.75),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: color, width: 1.5),
                   ),
-                  const SizedBox(height: 2),
-                  Text(
-                    '🔁 $_rebuilds',
-                    style: TextStyle(
-                      color: color,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        widget.name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '🔁 $_rebuilds',
+                        style: TextStyle(
+                          color: color,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 }

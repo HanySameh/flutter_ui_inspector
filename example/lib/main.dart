@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui_inspector/flutter_ui_inspector.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   // Enable inspector panel with long press gesture
-  UiInspectorPanel.enable(gesture: InspectorGesture.longPress);
-  
+  // UiInspectorPanel.enable(gesture: InspectorGesture.longPress);
+
   // Configure inspector features
   UiInspectorConfig.enabled = true;
   UiInspectorConfig.showRebuildCount = true;
   UiInspectorConfig.showStateBadge = true;
   UiInspectorConfig.trackPerformance = true;
   UiInspectorConfig.enableHeatmap = true;
-  
+
   runApp(const MyApp());
 }
 
@@ -26,7 +27,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: UiInspectorPanelHost(
+        gesture: InspectorGesture.longPress,
+        child: const HomePage(),
+      ),
     );
   }
 }
@@ -57,10 +61,10 @@ class _HomePageState extends State<HomePage> {
       _hasError = false;
       _isEmpty = false;
     });
-    
+
     // Artificial delay to demonstrate performance tracking
     await Future.delayed(const Duration(milliseconds: 1500));
-    
+
     setState(() {
       _isLoading = false;
       _items = List.generate(10, (i) => 'Item ${i + 1}');
@@ -72,9 +76,9 @@ class _HomePageState extends State<HomePage> {
       _isLoading = true;
       _hasError = false;
     });
-    
+
     await Future.delayed(const Duration(milliseconds: 800));
-    
+
     setState(() {
       _isLoading = false;
       _hasError = true;
@@ -137,7 +141,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             // Action buttons
             Wrap(
               spacing: 8,
@@ -159,14 +163,11 @@ class _HomePageState extends State<HomePage> {
                   onPressed: _simulateEmpty,
                   child: const Text('Show Empty'),
                 ),
-                ElevatedButton(
-                  onPressed: _reset,
-                  child: const Text('Reset'),
-                ),
+                ElevatedButton(onPressed: _reset, child: const Text('Reset')),
               ],
             ),
             const SizedBox(height: 16),
-            
+
             // List section - demonstrates rebuild tracking
             UiInspector(
               name: 'ItemList',
@@ -232,7 +233,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             // Info card
             Card(
               color: Colors.blue.shade50,

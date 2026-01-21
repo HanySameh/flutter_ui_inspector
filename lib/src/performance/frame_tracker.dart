@@ -80,6 +80,8 @@ class FrameTracker {
     if (_frameTimes.isEmpty) return 0;
     final now = DateTime.now();
     _pruneOldFrames(now);
+    // Check again after pruning - list might be empty now
+    if (_frameTimes.isEmpty) return 0;
     final spanMs =
         (_frameTimes.last.millisecondsSinceEpoch -
                 _frameTimes.first.millisecondsSinceEpoch)

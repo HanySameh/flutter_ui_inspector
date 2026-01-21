@@ -45,39 +45,48 @@ class UiStateBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!DebugGuard.enabled || !UiInspectorConfig.showStateBadge) {
+    if (!DebugGuard.enabled) {
       return child;
     }
 
-    final color = _stateColor(state);
-    final label = '$name • ${state.name.toUpperCase()}';
+    return ValueListenableBuilder<bool>(
+      valueListenable: UiInspectorConfig.showStateBadgeNotifier,
+      builder: (context, showBadge, _) {
+        if (!showBadge) {
+          return child;
+        }
 
-    return Stack(
-      children: [
-        child,
-        Positioned(
-          left: 4,
-          bottom: 4,
-          child: IgnorePointer(
-            ignoring: true,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.9),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Text(
-                label,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
+        final color = _stateColor(state);
+        final label = '$name • ${state.name.toUpperCase()}';
+
+        return Stack(
+          children: [
+            child,
+            Positioned(
+              left: 4,
+              bottom: 4,
+              child: IgnorePointer(
+                ignoring: true,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: color.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    label,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 

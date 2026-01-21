@@ -14,25 +14,34 @@ class RebuildHeatmap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!DebugGuard.enabled || !UiInspectorConfig.enableHeatmap) {
+    if (!DebugGuard.enabled) {
       return const SizedBox.shrink();
     }
 
-    final widgets = UiInspectorRegistry.all();
-    final maxRebuilds = widgets.isEmpty
-        ? 0
-        : widgets.map((w) => w.rebuilds).reduce((a, b) => a > b ? a : b);
+    return ValueListenableBuilder<bool>(
+      valueListenable: UiInspectorConfig.enableHeatmapNotifier,
+      builder: (context, enableHeatmap, _) {
+        if (!enableHeatmap) {
+          return const SizedBox.shrink();
+        }
 
-    // Normalize intensity: 0..1 based on threshold and observed max.
-    final threshold = UiInspectorConfig.rebuildWarningThreshold;
-    final intensity = maxRebuilds == 0
-        ? 0.0
-        : (maxRebuilds / threshold).clamp(0.0, 1.0);
+        final widgets = UiInspectorRegistry.all();
+        final maxRebuilds = widgets.isEmpty
+            ? 0
+            : widgets.map((w) => w.rebuilds).reduce((a, b) => a > b ? a : b);
 
-    // Render a subtle red overlay; higher rebuild counts => more opacity.
-    return IgnorePointer(
-      ignoring: true,
-      child: Container(color: Colors.red.withOpacity(intensity * 0.35)),
+        // Normalize intensity: 0..1 based on threshold and observed max.
+        final threshold = UiInspectorConfig.rebuildWarningThreshold;
+        final intensity = maxRebuilds == 0
+            ? 0.0
+            : (maxRebuilds / threshold).clamp(0.0, 1.0);
+
+        // Render a subtle red overlay; higher rebuild counts => more opacity.
+        return IgnorePointer(
+          ignoring: true,
+          child: Container(color: Colors.red.withOpacity(intensity * 0.35)),
+        );
+      },
     );
   }
 }

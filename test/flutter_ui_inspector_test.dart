@@ -9,10 +9,10 @@ void main() {
   setUp(() {
     // Reset config to defaults
     UiInspectorConfig.enabled = true;
-    UiInspectorConfig.showRebuildCount = true;
-    UiInspectorConfig.showStateBadge = true;
+    UiInspectorConfig.setShowRebuildCount(true);
+    UiInspectorConfig.setShowStateBadge(true);
     UiInspectorConfig.trackPerformance = false;
-    UiInspectorConfig.enableHeatmap = false;
+    UiInspectorConfig.setEnableHeatmap(false);
     UiInspectorConfig.rebuildWarningThreshold = 10;
     UiInspectorConfig.jankFrameThresholdMs = 16.0;
     UiInspectorRegistry.reset();
@@ -43,7 +43,7 @@ void main() {
   });
 
   testWidgets('UiStateBadge hides when disabled', (tester) async {
-    UiInspectorConfig.showStateBadge = false;
+    UiInspectorConfig.setShowStateBadge(false);
     await tester.pumpWidget(
       const Directionality(
         textDirection: TextDirection.ltr,
@@ -125,7 +125,7 @@ void main() {
   });
 
   testWidgets('RebuildHeatmap renders overlay when enabled', (tester) async {
-    UiInspectorConfig.enableHeatmap = true;
+    UiInspectorConfig.setEnableHeatmap(true);
     await tester.pumpWidget(
       const Directionality(
         textDirection: TextDirection.ltr,
@@ -135,10 +135,12 @@ void main() {
     expect(find.byType(IgnorePointer), findsOneWidget);
   });
 
-  testWidgets('Inspector panel enable does not throw', (tester) async {
-    UiInspectorPanel.enable(gesture: InspectorGesture.longPress);
+  testWidgets('Inspector panel host does not throw', (tester) async {
     await tester.pumpWidget(
-      const MaterialApp(home: Scaffold(body: Text('home'))),
+      UiInspectorPanelHost(
+        gesture: InspectorGesture.longPress,
+        child: const MaterialApp(home: Scaffold(body: Text('home'))),
+      ),
     );
     await tester.pumpAndSettle();
 
