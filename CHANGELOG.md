@@ -1,3 +1,7 @@
+# 1.0.2
+
+- Updated README screenshot URLs to use GitHub raw URLs for better pub.dev display
+
 # 1.0.1
 
 - Fixed deprecated `withOpacity` calls, replaced with `withValues(alpha:)`

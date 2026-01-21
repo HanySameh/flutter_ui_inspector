@@ -19,7 +19,7 @@ Debugging UI issues is hard when you can’t see rebuild churn or widget state t
 
 | Without Inspector | With Inspector | Inspector Panel |
 |-------------------|----------------|-----------------|
-| ![Without Inspector](screenshots/without_inspector.png) | ![With Inspector](screenshots/main_demo.png) | ![Inspector Panel](screenshots/inspector_demo.png) |
+| ![Without Inspector](https://raw.githubusercontent.com/HanySameh/flutter_ui_inspector/main/screenshots/without_inspector.png) | ![With Inspector](https://raw.githubusercontent.com/HanySameh/flutter_ui_inspector/main/screenshots/main_demo.png) | ![Inspector Panel](https://raw.githubusercontent.com/HanySameh/flutter_ui_inspector/main/screenshots/inspector_demo.png) |
 
 ## Safety
 
