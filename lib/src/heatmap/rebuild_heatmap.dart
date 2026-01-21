@@ -39,7 +39,9 @@ class RebuildHeatmap extends StatelessWidget {
         // Render a subtle red overlay; higher rebuild counts => more opacity.
         return IgnorePointer(
           ignoring: true,
-          child: Container(color: Colors.red.withOpacity(intensity * 0.35)),
+          child: Container(
+            color: Colors.red.withValues(alpha: intensity * 0.35),
+          ),
         );
       },
     );

@@ -158,8 +158,8 @@ class _PanelCardState extends State<_PanelCard> {
 
     // Use theme-aware colors
     final surfaceColor = isDark
-        ? Colors.grey.shade900.withOpacity(0.95)
-        : Colors.grey.shade50.withOpacity(0.95);
+        ? Colors.grey.shade900.withValues(alpha: 0.95)
+        : Colors.grey.shade50.withValues(alpha: 0.95);
     final textColor = isDark ? Colors.white : Colors.black87;
     final textSecondaryColor = isDark ? Colors.white70 : Colors.black54;
 
@@ -174,7 +174,7 @@ class _PanelCardState extends State<_PanelCard> {
       color: surfaceColor,
       borderRadius: BorderRadius.circular(12),
       elevation: 8,
-      shadowColor: Colors.black.withOpacity(0.3),
+      shadowColor: Colors.black.withValues(alpha: 0.3),
       child: ConstrainedBox(
         constraints: const BoxConstraints(minWidth: 240, maxWidth: 280),
         child: Padding(
@@ -323,8 +323,8 @@ class _PanelCardState extends State<_PanelCard> {
     onSelected: onChanged,
     selectedColor: colorScheme.primary,
     backgroundColor: isDark
-        ? Colors.white.withOpacity(0.1)
-        : Colors.black.withOpacity(0.05),
+        ? Colors.white.withValues(alpha: 0.1)
+        : Colors.black.withValues(alpha: 0.05),
     checkmarkColor: Colors.white,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   );
@@ -344,8 +344,8 @@ class _PanelCardState extends State<_PanelCard> {
     ),
     onPressed: onTap,
     backgroundColor: isDark
-        ? Colors.white.withOpacity(0.1)
-        : Colors.black.withOpacity(0.05),
+        ? Colors.white.withValues(alpha: 0.1)
+        : Colors.black.withValues(alpha: 0.05),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   );
 }

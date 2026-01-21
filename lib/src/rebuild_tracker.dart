@@ -80,7 +80,7 @@ class _RebuildTrackerState extends State<RebuildTracker> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.75),
+                    color: Colors.black.withValues(alpha: 0.75),
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(color: color, width: 1.5),
                   ),
