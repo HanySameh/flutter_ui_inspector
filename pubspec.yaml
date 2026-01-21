@@ -1,7 +1,6 @@
 name: flutter_ui_inspector
 description: Debug-only Flutter inspector for UI state, rebuilds, and performance overlays.
 version: 1.0.0
-publish_to: "https://pub.dev"
 homepage: https://github.com/HanySameh/flutter_ui_inspector
 repository: https://github.com/HanySameh/flutter_ui_inspector
 license: MIT
