@@ -17,13 +17,9 @@ Debugging UI issues is hard when you can’t see rebuild churn or widget state t
 
 ## Screenshots
 
-### Main Demo
-
-![Demo](screenshots/main_demo.png)
-
-### Inspector Panel
-
-![Inspector Panel](screenshots/inspector_demo.png)
+| Without Inspector | With Inspector | Inspector Panel |
+|-------------------|----------------|-----------------|
+| ![Without Inspector](screenshots/without_inspector.png) | ![With Inspector](screenshots/main_demo.png) | ![Inspector Panel](screenshots/inspector_demo.png) |
 
 ## Safety
 
