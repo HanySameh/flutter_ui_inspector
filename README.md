@@ -87,6 +87,24 @@ UiInspectorConfig.jankFrameThresholdMs = 16.0;
 - Overlay order: badges/heatmap do not yet respect widget geometry (render as global overlays).
 - Frame tracking requires `UiInspectorConfig.trackPerformance = true`.
 
+## Support
+
+If you encounter any issues or have questions, please:
+
+- Open an issue on [GitHub](https://github.com/HanySameh/flutter_ui_inspector/issues)
+- Email: [hanysameh506@gmail.com](mailto:hanysameh506@gmail.com)
+- Check existing issues for solutions
+- Review the documentation above
+
+## Show Your Support
+
+If this package has been helpful, please consider:
+
+- ⭐ Starring the repository on [GitHub](https://github.com/HanySameh/flutter_ui_inspector)
+- 🐛 Reporting bugs or suggesting features
+- 📖 Sharing with other Flutter developers
+- 💬 Providing feedback and improvements
+
 ## License
 
 MIT License (see LICENSE).

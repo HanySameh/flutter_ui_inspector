@@ -1,3 +1,7 @@
+# 1.0.3
+
+- Updated README with support email and improved support sections
+
 # 1.0.2
 
 - Updated README screenshot URLs to use GitHub raw URLs for better pub.dev display
