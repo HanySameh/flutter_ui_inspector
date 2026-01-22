@@ -22,7 +22,31 @@ class WidgetStats {
   UiState state;
 
   /// Timestamp of the last update to these stats.
+  /// Timestamp of the last update to these stats.
   DateTime lastUpdated;
+
+  /// Calculate average rebuilds per second.
+  double get frequency => rebuildsPerSecond;
+
+  final List<DateTime> _recentRebuilds = [];
+
+  void addRebuild() {
+    final now = DateTime.now();
+    _recentRebuilds.add(now);
+    // Keep last 60 rebuilds or 5 seconds worth
+    _recentRebuilds.removeWhere((t) => now.difference(t).inSeconds > 5);
+    rebuilds += 1;
+    lastUpdated = now;
+  }
+
+  double get rebuildsPerSecond {
+    if (_recentRebuilds.isEmpty) return 0.0;
+    final now = DateTime.now();
+    // Remove old ones first to be accurate
+    _recentRebuilds.removeWhere((t) => now.difference(t).inSeconds > 5);
+    if (_recentRebuilds.isEmpty) return 0.0;
+    return _recentRebuilds.length / 5.0; // Average over last 5 seconds
+  }
 }
 
 /// Global registry storing widget statistics for inspector features.
@@ -50,8 +74,7 @@ class UiInspectorRegistry {
   static void updateRebuild(String id) {
     final stats = _widgets[id];
     if (stats != null) {
-      stats.rebuilds += 1;
-      stats.lastUpdated = DateTime.now();
+      stats.addRebuild();
     }
   }
 

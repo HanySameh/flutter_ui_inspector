@@ -36,11 +36,20 @@ class RebuildHeatmap extends StatelessWidget {
             ? 0.0
             : (maxRebuilds / threshold).clamp(0.0, 1.0);
 
-        // Render a subtle red overlay; higher rebuild counts => more opacity.
+        // Render a vignette effect; higher rebuild counts => more opacity at edges.
         return IgnorePointer(
           ignoring: true,
           child: Container(
-            color: Colors.red.withValues(alpha: intensity * 0.35),
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                colors: [
+                  Colors.transparent,
+                  Colors.red.withValues(alpha: intensity * 0.5),
+                ],
+                stops: const [0.2, 1.0],
+                radius: 1.2,
+              ),
+            ),
           ),
         );
       },

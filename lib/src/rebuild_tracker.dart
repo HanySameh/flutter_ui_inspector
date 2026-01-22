@@ -69,6 +69,10 @@ class _RebuildTrackerState extends State<RebuildTracker> {
             ? Colors.red
             : Colors.blueAccent;
 
+        if (_rebuilds == UiInspectorConfig.rebuildWarningThreshold && UiInspectorConfig.logOnRebuildWarning) {
+            UiInspectorConfig.logger.w('UI Inspector: Widget "${widget.name}" exceeded ${UiInspectorConfig.rebuildWarningThreshold} rebuilds!');
+        }
+
         return Stack(
           children: [
             widget.child,

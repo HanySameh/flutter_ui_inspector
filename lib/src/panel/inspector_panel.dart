@@ -27,6 +27,7 @@ class _UiInspectorPanelHostState extends State<UiInspectorPanelHost> {
   final ValueNotifier<bool> _visible = ValueNotifier(false);
   int _tapCount = 0;
   DateTime _lastTap = DateTime.fromMillisecondsSinceEpoch(0);
+  Offset _position = const Offset(16, 100); // Default starting position
 
   @override
   void initState() {
@@ -78,11 +79,18 @@ class _UiInspectorPanelHostState extends State<UiInspectorPanelHost> {
                 ),
                 if (isVisible)
                   Positioned(
-                    right: 16,
-                    bottom: 32,
-                    child: _PanelCard(
-                      onClose: _toggle,
-                      onRebuild: () => _entry?.markNeedsBuild(),
+                    left: _position.dx,
+                    top: _position.dy,
+                    child: GestureDetector(
+                      onPanUpdate: (details) {
+                        setState(() {
+                          _position += details.delta;
+                        });
+                      },
+                      child: _PanelCard(
+                        onClose: _toggle,
+                        onRebuild: () => _entry?.markNeedsBuild(),
+                      ),
                     ),
                   ),
               ],
@@ -132,6 +140,8 @@ class _PanelCard extends StatefulWidget {
 
 class _PanelCardState extends State<_PanelCard> {
   Timer? _updateTimer;
+  String _searchQuery = '';
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -221,13 +231,56 @@ class _PanelCardState extends State<_PanelCard> {
                 textSecondaryColor,
               ),
               _infoLine(
+                'Max Freq',
+                '${mostRebuilt?.rebuildsPerSecond.toStringAsFixed(1) ?? 0.0}/s',
+                textColor,
+                textSecondaryColor,
+              ),
+              _infoLine(
                 'Avg FPS',
                 fps.toStringAsFixed(1),
                 textColor,
                 textSecondaryColor,
               ),
               _infoLine('Jank frames', '$jank', textColor, textSecondaryColor),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _searchController,
+                style: TextStyle(color: textColor, fontSize: 13),
+                decoration: InputDecoration(
+                  hintText: 'Filter widgets...',
+                  hintStyle: TextStyle(
+                    color: textSecondaryColor.withValues(alpha: 0.5),
+                  ),
+                  isDense: true,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 8,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(
+                      color: textSecondaryColor.withValues(alpha: 0.2),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(
+                      color: textSecondaryColor.withValues(alpha: 0.2),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: theme.primaryColor),
+                  ),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value;
+                  });
+                },
+              ),
+              const SizedBox(height: 12),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
@@ -271,6 +324,71 @@ class _PanelCardState extends State<_PanelCard> {
                     colorScheme: colorScheme,
                     isDark: isDark,
                   ),
+                  if (_searchQuery.isNotEmpty) ...[
+                    const Divider(height: 16),
+                    Text(
+                      'Search Results',
+                      style: TextStyle(
+                        color: textColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    ...widgets
+                        .where(
+                          (w) => w.name.toLowerCase().contains(
+                            _searchQuery.toLowerCase(),
+                          ),
+                        )
+                        .take(5)
+                        .map(
+                          (w) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    w.name,
+                                    style: TextStyle(
+                                      color: textSecondaryColor,
+                                      fontSize: 11,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Text(
+                                  '${w.rebuilds} (${w.frequency.toStringAsFixed(1)}/s)',
+                                  style: TextStyle(
+                                    color: textColor,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                    if (widgets
+                        .where(
+                          (w) => w.name.toLowerCase().contains(
+                            _searchQuery.toLowerCase(),
+                          ),
+                        )
+                        .isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Text(
+                          'No matches',
+                          style: TextStyle(
+                            color: textSecondaryColor,
+                            fontSize: 11,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                  ],
                 ],
               ),
             ],

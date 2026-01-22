@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_inspector/flutter_ui_inspector.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Enable inspector panel with long press gesture
-  // UiInspectorPanel.enable(gesture: InspectorGesture.longPress);
-
-  // Configure inspector features
+  
+  // Configure default inspector features
   UiInspectorConfig.enabled = true;
   UiInspectorConfig.showRebuildCount = true;
   UiInspectorConfig.showStateBadge = true;
   UiInspectorConfig.trackPerformance = true;
   UiInspectorConfig.enableHeatmap = true;
+  UiInspectorConfig.logOnRebuildWarning = true;
+
+  // Initialize persistence (restores saved settings if any)
+  await UiInspectorConfig.init();
 
   runApp(const MyApp());
 }
@@ -249,7 +251,9 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 8),
                     const Text(
                       '• Long press anywhere to open inspector panel\n'
-                      '• Rebuild badges show in top-right (red if >10 rebuilds)\n'
+                      '• Drag the panel to move it around\n'
+                      '• Rebuild badges show in top-right (count & frequency)\n'
+                      '• Console logs warnings when rebuilds > 10\n'
                       '• State badges show in bottom-left (loading/error/empty/ready)\n'
                       '• Heatmap overlay shows rebuild intensity\n'
                       '• Panel shows FPS, jank frames, and widget stats',
