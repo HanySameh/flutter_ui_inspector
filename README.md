@@ -2,7 +2,7 @@
 
 Debug-only UI inspection tools for Flutter. Inspect widget state, rebuild frequency, performance, and a floating panel without impacting release builds.
 
-![Flutter UI Inspector v1.1 Dashboard](screenshots/inspector_v1_1.png)
+![Flutter UI Inspector v1.1 Dashboard](https://raw.githubusercontent.com/HanySameh/flutter_ui_inspector/main/screenshots/inspector_v1_1.png)
 
 ## Why
 
@@ -26,17 +26,17 @@ Debugging UI issues is hard when you can’t see rebuild churn or widget state t
   <tr>
     <td width="50%">
       <strong>Main Demo</strong><br/>
-      <img src="screenshots/main_demo.png" alt="Main Demo" width="100%"/>
+      <img src="https://raw.githubusercontent.com/HanySameh/flutter_ui_inspector/main/screenshots/main_demo.png" alt="Main Demo" width="100%"/>
     </td>
     <td width="50%">
       <strong>Inspector Panel & Badges</strong><br/>
-      <img src="screenshots/inspector_demo.png" alt="Inspector Demo" width="100%"/>
+      <img src="https://raw.githubusercontent.com/HanySameh/flutter_ui_inspector/main/screenshots/inspector_demo.png" alt="Inspector Demo" width="100%"/>
     </td>
   </tr>
   <tr>
     <td width="50%">
       <strong>Without Inspector</strong><br/>
-      <img src="screenshots/without_inspector.png" alt="Without Inspector" width="100%"/>
+      <img src="https://raw.githubusercontent.com/HanySameh/flutter_ui_inspector/main/screenshots/without_inspector.png" alt="Without Inspector" width="100%"/>
     </td>
     <td width="50%">
       <strong>With Inspector</strong><br/>
@@ -47,7 +47,7 @@ Debugging UI issues is hard when you can’t see rebuild churn or widget state t
 
 ### Console Logging
 
-![Console Logging](screenshots/logger.png)
+![Console Logging](https://raw.githubusercontent.com/HanySameh/flutter_ui_inspector/main/screenshots/logger.png)
 
 ## Safety
 
